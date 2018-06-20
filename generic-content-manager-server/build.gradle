@@ -1,0 +1,80 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+apply plugin: 'org.flywaydb.flyway'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+    }
+    
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.4.RELEASE") 
+        classpath("gradle.plugin.com.boxfuse.client:flyway-release:4.2.0")
+        classpath files("libs/ojdbc7.jar")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	//compile("org.hibernate:hibernate-validator")
+	compile("org.flywaydb:flyway-core:4.2.0")
+	//compile("org.springframework.boot:spring-boot-starter-security")
+	//compile("org.springframework.ldap:spring-ldap-core")
+	//compile("org.springframework.security:spring-security-ldap")
+	//compile("org.springframework:spring-tx")
+	//compile("com.unboundid:unboundid-ldapsdk")
+	//compile("com.fasterxml.jackson.core:jackson-databind")
+	compile("org.togglz:togglz-spring-boot-starter:2.4.1.Final")
+	//compile("org.togglz:togglz-spring-security:2.4.1.Final")
+	//compile("org.togglz:togglz-console:2.4.1.Final")
+	compile('org.apache.commons:commons-lang3:3.6')
+	compile("org.json:json:20171018")
+	//compile("com.netflix.hystrix:hystrix-core:1.5.12")
+	//compile('com.ibm.icu:icu4j:60.2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	//testCompile('com.h2database:h2')
+	//testCompile('com.unboundid:unboundid-ldapsdk')
+	//testCompile('org.springframework.ldap:spring-ldap-test')
+	
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+}
+
+war {
+	archiveName 'GenericContentManagerService.war'
+}
+
+ext.applyEnvironmentConfig = { environment ->
+	def environmentScript = file("gradle/dev-env.gradle")
+	if (environmentScript.exists()) {
+	  apply from: environmentScript
+	}
+}
+
+if (hasProperty('applicationVersion')) {
+	project.version = project.applicationVersion
+} else {
+	project.version = "SNAPSHOT";
+}
+
+if (!hasProperty('environment')) {
+	def environment = 'dev'
+	applyEnvironmentConfig(environment)	
+} else {
+	applyEnvironmentConfig(environment)
+}
