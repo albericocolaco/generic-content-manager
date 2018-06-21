@@ -1,6 +1,7 @@
 package br.com.contentmanager.exception;
 
 import br.com.contentmanager.dto.BusinessResponse;
+import br.com.contentmanager.util.ErrorMessageEnum;
 
 /**
  * 
@@ -23,6 +24,24 @@ public class BusinessException extends Exception {
 	 */
 	public BusinessException(final int code, final String mensage){
 		this.businessResponse = new BusinessResponse(code, mensage);
+	}
+	
+	/**
+	 * Generate exception type BysinessException.
+	 * @param errorMessageEnum
+	 */
+	public BusinessException(final ErrorMessageEnum errorMessageEnum){
+		this.businessResponse = new BusinessResponse(errorMessageEnum.getHttpCode(), errorMessageEnum.getMessage());
+	}
+	
+	/**
+	 * Generate exception type BysinessException by other exception.
+	 * @param errorMessageEnum
+	 * @param cause
+	 */
+	public BusinessException(final ErrorMessageEnum errorMessageEnum, final Throwable cause){
+		super(errorMessageEnum.getMessage(), cause);
+		this.businessResponse = new BusinessResponse(errorMessageEnum.getHttpCode(), errorMessageEnum.getMessage());
 	}
 	
 	/**

@@ -1,1 +1,10 @@
 /generic-content-manager-server/build/
+
+/generic-content-manager-server/.gradle/
+
+/generic-content-manager-server/.gradle/
+/generic-content-manager-server/build/
+/generic-content-manager-server/.classpath
+/generic-content-manager-server/.project
+/generic-content-manager-server/.settings/
+/generic-content-manager-server/bin/
