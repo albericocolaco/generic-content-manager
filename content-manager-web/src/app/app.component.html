@@ -1,19 +1,15 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-</div>
 
-<quill-editor (onContentChanged)="onContentChanged($event)" (onSelectionChanged)="onSelectionChanged($event)"></quill-editor>
+
+<!--quill-editor (onContentChanged)="onContentChanged($event)" (onSelectionChanged)="onSelectionChanged($event)"></quill-editor>
 
 
 <div [innerHTML]="content"></div>
 
-{{content}}
+{{content}}-->
 
 
-<quill-editor (onContentChanged)="onContentChanged($event)" *ngIf="false" (onSelectionChanged)="onSelectionChanged($event)">
+<!--quill-editor (onContentChanged)="onContentChanged($event)" *ngIf="false" (onSelectionChanged)="onSelectionChanged($event)">
   <div quill-editor-toolbar>
     <span class="ql-formats">
       <button class="ql-bold" [title]="'Bold'"></button>
@@ -31,4 +27,6 @@
       </select>
     </span>
   </div>
-</quill-editor>
+</quill-editor-->
+
+<router-outlet></router-outlet>
