@@ -1,6 +1,6 @@
 flyway {
-	url = 'jdbc:oracle:thin:@localdb:1521:xe'
-	user = 'portal_parceiros'
-	password = 'portal_parceiros'
+	url = 'jdbc:oracle:thin:@localhost:1521:xe'
+	user = 'content_manager'
+	password = 'content_manager'
 	locations = ['classpath:db/migration']
 }
