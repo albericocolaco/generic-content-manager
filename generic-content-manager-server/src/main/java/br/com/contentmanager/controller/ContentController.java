@@ -1,6 +1,7 @@
 package br.com.contentmanager.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,8 +36,10 @@ public class ContentController {
 	 * @return ContentDTO
 	 * @throws IOException
 	 */
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ContentDTO create(final HttpServletResponse httpResponse, @RequestBody final ContentDTO contentDTO) throws IOException{
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ContentDTO create(final HttpServletResponse httpResponse, 
+			@RequestBody final ContentDTO contentDTO) throws IOException{
 		ContentDTO result = null;
 		try {
 			result = this.contentModel.createContent(contentDTO);
@@ -53,8 +56,10 @@ public class ContentController {
 	 * @return ContentDTO
 	 * @throws IOException
 	 */
-	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ContentDTO update(final HttpServletResponse httpResponse, @RequestBody final ContentDTO contentDTO) throws IOException{
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ContentDTO update(final HttpServletResponse httpResponse, 
+			@RequestBody final ContentDTO contentDTO) throws IOException{
 		ContentDTO result = null;
 		try {
 			result = this.contentModel.updateContent(contentDTO);
@@ -71,11 +76,41 @@ public class ContentController {
 	 * @throws IOException
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void delete(final HttpServletResponse httpResponse, @RequestParam(value = "id", required = true) Long id) throws IOException{
+	public void delete(final HttpServletResponse httpResponse, 
+					   @RequestParam(value = "id", required = true) Long id) throws IOException{
 		try {
 			this.contentModel.removeContent(id);
 		} catch (Exception e) {
 			httpResponse.sendError(500, e.getMessage());
 		}
+	}
+	
+	/**
+	 * Operation of Find Content.
+	 * @param httpResponse
+	 * @param id
+	 * @param dateCreate
+	 * @param dateModify
+	 * @param active
+	 * @param contentTypeId
+	 * @param systemId
+	 * @return List<ContentDTO>
+	 * @throws IOException
+	 */
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ContentDTO> find(final HttpServletResponse httpResponse, 
+								 @RequestParam(value = "id", required = false) Long id,
+								 @RequestParam(value = "dateCreate", required = false) Long dateCreate,
+								 @RequestParam(value = "dateModify", required = false) Long dateModify,
+								 @RequestParam(value = "active", required = false) String active,
+								 @RequestParam(value = "contentTypeId", required = false) Long contentTypeId,
+								 @RequestParam(value = "systemId", required = false) Long systemId) throws IOException{
+		List<ContentDTO> result = null;
+		try {
+			result = this.contentModel.findContent(id, dateCreate, dateModify, active, contentTypeId, systemId);
+		} catch (BusinessException e) {
+			httpResponse.sendError(e.getBusinessResponse().getCode(), e.getBusinessResponse().getMensage());
+		}
+		return result;
 	}
 }

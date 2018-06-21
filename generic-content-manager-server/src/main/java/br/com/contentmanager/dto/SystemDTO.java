@@ -36,6 +36,15 @@ public class SystemDTO implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public SystemDTO(Long id, String code, String name) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.name = name;
+	}
+	public SystemDTO() {
+		super();
+	}
 	
 	
 }

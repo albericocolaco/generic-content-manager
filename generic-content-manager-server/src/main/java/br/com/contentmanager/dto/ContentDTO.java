@@ -66,5 +66,20 @@ public class ContentDTO implements Serializable{
 		this.system = system;
 	}
 	
+	public ContentDTO(Long id, String active, String contentLiv, Long dateCreate, Long dateModify,
+			ContentTypeDTO contentType, SystemDTO system) {
+		super();
+		this.id = id;
+		this.active = active;
+		this.contentLiv = contentLiv;
+		this.dateCreate = dateCreate == null ? null : new Timestamp(dateCreate);
+		this.dateModify = dateModify == null ? null : new Timestamp(dateModify);
+		this.contentType = contentType;
+		this.system = system;
+	}
+	public ContentDTO() {
+		super();
+	}
+	
 
 }

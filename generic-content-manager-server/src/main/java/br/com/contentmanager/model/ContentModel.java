@@ -37,9 +37,15 @@ public interface ContentModel {
 	
 	/**
 	 * Find content.
-	 * @param contentDTO
+	 * @param id
+	 * @param dateCreate
+	 * @param dateModify
+	 * @param active
+	 * @param contentTypeId
+	 * @param systemId
 	 * @return List<ContentDTO>
 	 * @throws BusinessException
 	 */
-	public List<ContentDTO> findContent(final ContentDTO contentDTO) throws BusinessException;
+	public List<ContentDTO> findContent(final Long id, final Long dateCreate, final Long dateModify, 
+			final String active, final Long contentTypeId, final Long systemId) throws BusinessException;
 }

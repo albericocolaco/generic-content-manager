@@ -29,6 +29,14 @@ public class ContentTypeDTO implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	public ContentTypeDTO(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	public ContentTypeDTO() {
+		super();
+	}
 	
 	
 }

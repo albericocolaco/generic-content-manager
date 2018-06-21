@@ -5,13 +5,19 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
 
 import br.com.contentmanager.converter.ContentConverter;
+import br.com.contentmanager.converter.ContentTypeConverter;
+import br.com.contentmanager.converter.SystemConverter;
 import br.com.contentmanager.dao.ContentDAO;
 import br.com.contentmanager.dto.ContentDTO;
+import br.com.contentmanager.dto.ContentTypeDTO;
+import br.com.contentmanager.dto.SystemDTO;
 import br.com.contentmanager.entity.ContentLiv;
 import br.com.contentmanager.exception.BusinessException;
+import br.com.contentmanager.specification.ContentSpecification;
 import br.com.contentmanager.util.ErrorMessageEnum;
 
 /**
@@ -41,9 +47,46 @@ public class ContentModelImpl implements ContentModel{
 	}
 
 	@Override
-	public List<ContentDTO> findContent(final ContentDTO contentDTO) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ContentDTO> findContent(final Long id, final Long dateCreate, final Long dateModify, 
+			final String active, final Long contentTypeId, final Long systemId) throws BusinessException {
+		final SystemDTO system = new SystemDTO(systemId, null, null);
+		final ContentTypeDTO contentTypeDTO = new ContentTypeDTO(contentTypeId, null);
+		final ContentDTO contentDTO = new ContentDTO(id, active, null, dateCreate, dateModify, contentTypeDTO, system);
+		final List<ContentLiv> result = this.contentDAO.findAll(this.makeFilterForSelectDB(contentDTO));
+		if(result == null || result.isEmpty()){
+			throw new BusinessException(ErrorMessageEnum.DATA_NOT_FOUND);
+		}
+		return ContentConverter.entitoToDTO(result);
+	}
+	
+	/**
+	 * Build the filter for custom select in DB.
+	 * @param contentDTO
+	 * @return Specifications<ContentLiv>
+	 */
+	private Specifications<ContentLiv> makeFilterForSelectDB(final ContentDTO contentDTO){
+		Specifications<ContentLiv> spec = Specifications.where(ContentSpecification.oneEqualOne());
+		if(contentDTO != null){
+			if(contentDTO.getId() != null){
+				spec = spec.and(ContentSpecification.andID(contentDTO.getId()));
+			}
+			if(contentDTO.getDateCreate() != null){
+				spec = spec.and(ContentSpecification.andDateCreate(contentDTO.getDateCreate()));
+			}
+			if(contentDTO.getDateModify() != null){
+				spec = spec.and(ContentSpecification.andDateModify(contentDTO.getDateModify()));
+			}
+			if(contentDTO.getActive() != null){
+				spec = spec.and(ContentSpecification.andActive(contentDTO.getActive()));
+			}
+			if(contentDTO.getContentType() != null && contentDTO.getContentType().getId() != null){
+				spec = spec.and(ContentSpecification.andContentType(ContentTypeConverter.dtoToEntity(contentDTO.getContentType())));
+			}
+			if(contentDTO.getSystem() != null && contentDTO.getSystem().getId() != null){
+				spec = spec.and(ContentSpecification.andSystem(SystemConverter.dtoToEntity(contentDTO.getSystem())));
+			}
+		}
+		return spec;
 	}
 	
 	/**

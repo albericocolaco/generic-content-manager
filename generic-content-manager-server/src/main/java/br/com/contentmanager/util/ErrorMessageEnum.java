@@ -12,7 +12,8 @@ public enum ErrorMessageEnum {
 	ATTRIBUTE_REQUIRED_NOT_INFORMED_CONTENT(400,"Campo obrigatório não informado - CONTENT"),
 	ATTRIBUTE_REQUIRED_NOT_INFORMED_ID_SYSTEM(400,"Campo obrigatório não informado - ID_SYSTEM"),
 	ATTRIBUTE_REQUIRED_NOT_INFORMED_ID_CONTENT_TYPE(400,"Campo obrigatório não informado - ID_CONTENT_TYPE"),
-	ATTRIBUTE_REQUIRED_NOT_INFORMED_ACTIVE(400,"Campo obrigatório não informado - ACTIVE");
+	ATTRIBUTE_REQUIRED_NOT_INFORMED_ACTIVE(400,"Campo obrigatório não informado - ACTIVE"),
+	DATA_NOT_FOUND(204,"Informações não encontradas");
 	
 	private Integer httpCode;
 	private String message;
