@@ -5,14 +5,19 @@ import { AppComponent } from './app.component';
 
 import { QuillModule } from 'ngx-quill';
 import { CreateManualComponent } from './create-manual/create-manual.component';
-import { RouterModule, Routes } from '@angular/router';
+import { ListManualComponent } from './list-manual/list-manual.component';
 import { ViewManualComponent } from './view-manual/view-manual.component';
-//import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { HttpModule } from "@angular/http";
+import { EditManualComponent } from './edit-manual/edit-manual.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 const appRoutes: Routes = [
   { path: 'create/manual', component: CreateManualComponent },
+  { path: 'list/manual', component: ListManualComponent },
+  { path: 'edit/manual/:id', component: EditManualComponent },
   { path: 'view/manual/:id', component: ViewManualComponent }
 ];
 
@@ -20,7 +25,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CreateManualComponent,
-    ViewManualComponent
+    ViewManualComponent,
+    ListManualComponent,
+    EditManualComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +37,8 @@ const appRoutes: Routes = [
       {enableTracing: true}
     ),
     HttpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

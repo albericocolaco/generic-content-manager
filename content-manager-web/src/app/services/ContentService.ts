@@ -24,7 +24,7 @@ export class ContentService {
     }
 
     getContent(idContent: string, dateCreate: Date, dateModify: Date, 
-        active: string, contentTypeId: number, systemId: number): Observable<Content> {
+        active: string, contentTypeId: number, systemId: number): Observable<Content[]> {
         const headers: Headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -50,6 +50,29 @@ export class ContentService {
         const params = urlSearchParams.toString();
 
         return this.http.get('/api/content/',{headers: headers, params: params }).map(
+            (response: Response) => {
+                return response.json() as Content[];
+            }
+        );
+    }
+
+    removeContent(idContent: number): Observable<any> {
+        const headers: Headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        const urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('id', idContent.toString());
+        const params = urlSearchParams.toString();
+        return this.http.delete('/api/content/',{headers: headers, params: params}).map(
+            (response: Response) => {
+                return response.json();
+            }
+        );
+    }
+
+    putContent(content: Content): Observable<Content> {
+        const headers: Headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('/api/content/', content,{headers: headers}).map(
             (response: Response) => {
                 return response.json() as Content;
             }

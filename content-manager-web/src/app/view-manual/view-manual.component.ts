@@ -21,7 +21,7 @@ export class ViewManualComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.contentService.getContent(this.id, null, null, null, null, null).subscribe(
-      (response: Content) => {
+      (response: Content[]) => {
         this.content = response[0];
       }, error => {
         console.debug(error);

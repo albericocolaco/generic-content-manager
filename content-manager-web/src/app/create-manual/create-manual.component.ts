@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import { Content } from '../model/Content';
 import { ContentType } from '../model/ContentType';
 import { System } from '../model/System';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-manual',
@@ -17,7 +18,7 @@ export class CreateManualComponent implements OnInit {
   content: Content = new Content();
 
 
-  constructor(private contentService: ContentService) { }
+  constructor(private contentService: ContentService, private router: Router) { }
 
   /**
    * Function of Create Manual
@@ -26,7 +27,7 @@ export class CreateManualComponent implements OnInit {
     this.mockContent();
     this.contentService.postContent(this.content).subscribe(
       (response: Content) => {
-        console.debug(response);
+        this.goViewManual(response.id);
       }, error => {
         console.debug(error);
       }
@@ -57,6 +58,10 @@ export class CreateManualComponent implements OnInit {
     this.content.contentType.id = 1;
     this.content.system = new System();
     this.content.system.id = 1;
+  }
+
+  private goViewManual(id: number) {
+    this.router.navigate(['view/manual/'+id]); 
   }
 
   ngOnInit() {
