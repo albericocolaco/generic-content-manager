@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from '../services/ContentService';
 
-import { Http, URLSearchParams, Response, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Content } from '../model/Content';
@@ -16,25 +14,48 @@ import { System } from '../model/System';
   providers: [ContentService]
 })
 export class CreateManualComponent implements OnInit {
-  content: Content;
+  content: Content = new Content();
 
 
   constructor(private contentService: ContentService) { }
 
+  /**
+   * Function of Create Manual
+   */
   public createManual(){
     this.mockContent();
-    this.contentService.putContent(this.content).subscribe(
-          (response: Content) => {
-              console.debug(response);
-          }, error => {
-            console.debug(error);
-          }
-      );
+    this.contentService.postContent(this.content).subscribe(
+      (response: Content) => {
+        console.debug(response);
+      }, error => {
+        console.debug(error);
+      }
+    );
   }
 
+  /**
+   * Function of Component Text Area
+   * @param event 
+   */
+  onContentChanged(event){
+    this.content.contentLiv = event.html;
+  }
+
+  /**
+   * Function of Component Text Area
+   * @param event 
+   */
+  onSelectionChanged(event){
+  }
+
+  /**
+   * MOCK  CONTENT
+   */
   private mockContent(){
-    this.content.active = "s";
+    this.content.active = "S";
+    this.content.contentType = new ContentType();
     this.content.contentType.id = 1;
+    this.content.system = new System();
     this.content.system.id = 1;
   }
 

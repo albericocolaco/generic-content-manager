@@ -7,7 +7,9 @@ import { QuillModule } from 'ngx-quill';
 import { CreateManualComponent } from './create-manual/create-manual.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ViewManualComponent } from './view-manual/view-manual.component';
-import { HttpClientModule } from '@angular/common/http';
+//import { HttpClientModule } from '@angular/common/http';
+
+import { HttpModule } from "@angular/http";
 
 const appRoutes: Routes = [
   { path: 'create/manual', component: CreateManualComponent },
@@ -27,7 +29,7 @@ const appRoutes: Routes = [
       appRoutes,
       {enableTracing: true}
     ),
-    HttpClientModule,
+    HttpModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
