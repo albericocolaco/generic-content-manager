@@ -1,16 +1,12 @@
-<p>
-  edit-manual works!
-</p>
-
 <!--form [formGroup]="form">
 <quill-editor(onContentChanged)="onContentChanged($event)" (onSelectionChanged)="onSelectionChanged($event)" [formControl]="form.controls['editor']"></quill-editor>
 </form-->
-
-
-<h3>Reactive Forms and patch value</h3>
+<h1>Edit Manual - {{id}}</h1>
 <form [formGroup]="form">
-  {{form.controls.editor.value}}
-  <button type="button" (click)="patchValue()">patchValue</button>
-  <button type="button" (click)="setControl()">setControl</button>
+  <button type="button" (click)="updateManual()">Save</button>
+  <br>
+  <br>
   <quill-editor #editor [formControl]="form.controls['editor']"></quill-editor>
+  <br>
+  <button type="button" (click)="updateManual()">Save</button>
 </form>

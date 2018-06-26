@@ -1,3 +1,4 @@
+<h1>List Manual</h1>
 <table border="1">
   <tr>
     <td>ID</td>
@@ -8,9 +9,9 @@
   </tr>
   <tr *ngFor="let content of contents">
     <td>{{content.id}}</td>
-    <td>{{content.active}}</td>
+    <td>{{content.active  === 'S' ? 'Ativo' : 'Inativo'}}</td>
     <td>{{content.system.name}}</td>
     <td>{{content.contentType.name}}</td>
-    <td><a href="view/manual/{{content.id}}">View Manual</a> | <a href="edit/manual/{{content.id}}">Edit Manual</a> | <a href="list/manual" (click)="removeManual(content.id)">Remove Manual</a></td>
+    <td><a href="view/manual/{{content.id}}">View</a> | <a href="edit/manual/{{content.id}}">Edit</a> | <a href="list/manual" (click)="removeManual(content.id)">Remove</a></td>
   </tr>
 </table>

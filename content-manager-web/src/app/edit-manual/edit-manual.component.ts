@@ -35,7 +35,7 @@ export class EditManualComponent implements OnInit {
               private router: Router,
               fb: FormBuilder) { 
                 this.form = fb.group({
-                  editor: ['test']
+                  editor: ['']
                 });
               }
 
@@ -44,6 +44,7 @@ export class EditManualComponent implements OnInit {
    */
   public updateManual(){
     this.mockContent();
+    this.content.contentLiv = this.form.controls.editor.value;
     this.contentService.putContent(this.content).subscribe(
       (response: Content) => {
         this.goViewManual(response.id);
@@ -62,22 +63,6 @@ export class EditManualComponent implements OnInit {
     this.content.contentType.id = 2;
     this.content.system = new System();
     this.content.system.id = 2;
-  }
-
-  /**
-   * Function of Component Text Area
-   * @param event 
-   */
-  onContentChanged(event){
-    this.content.contentLiv = event.html;
-    event.htm
-  }
-
-  /**
-   * Function of Component Text Area
-   * @param event 
-   */
-  onSelectionChanged(event){
   }
 
   private goViewManual(id: number) {
@@ -106,6 +91,7 @@ export class EditManualComponent implements OnInit {
     this.contentService.getContent(this.id, null, null, null, null, null).subscribe(
       (response: Content[]) => {
         this.content = response[0];
+        this.form.controls['editor'].patchValue(`${this.form.controls['editor'].value} `+response[0].contentLiv);
       }, error => {
         console.debug(error);
       }
