@@ -3,10 +3,10 @@
 </form-->
 <h1>Edit Manual - {{id}}</h1>
 <form [formGroup]="form">
-  <button type="button" (click)="updateManual()">Save</button>
+  <button class="button" type="button" (click)="updateManual()">Save</button>
   <br>
   <br>
   <quill-editor #editor [formControl]="form.controls['editor']"></quill-editor>
   <br>
-  <button type="button" (click)="updateManual()">Save</button>
+  <button class="button" type="button" (click)="updateManual()">Save</button>
 </form>

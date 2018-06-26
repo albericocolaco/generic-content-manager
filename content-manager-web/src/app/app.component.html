@@ -28,9 +28,12 @@
     </span>
   </div>
 </quill-editor-->
-<a href="create/manual">Create Manual</a>
-|
-<a href="list/manual">List Manual</a>
+<div class="menu">
+  <ul>
+      <li><a href="create/manual" class="{{linkStyle[0]}}" (click)="eventSetActive(0)">Create Manual</a></li>
+      <li><a href="list/manual" class="{{linkStyle[1]}}" (click)="eventSetActive(1)">List Manual</a></li>
+    </ul>
+  </div>
 <br>
 <br>
 <router-outlet></router-outlet>
