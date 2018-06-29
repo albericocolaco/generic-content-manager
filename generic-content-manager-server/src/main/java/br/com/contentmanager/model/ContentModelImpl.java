@@ -12,10 +12,12 @@ import br.com.contentmanager.converter.ContentConverter;
 import br.com.contentmanager.converter.ContentTypeConverter;
 import br.com.contentmanager.converter.SystemConverter;
 import br.com.contentmanager.dao.ContentDAO;
+import br.com.contentmanager.dao.mongo.ArquivoRepository;
 import br.com.contentmanager.dto.ContentDTO;
 import br.com.contentmanager.dto.ContentTypeDTO;
 import br.com.contentmanager.dto.SystemDTO;
 import br.com.contentmanager.entity.ContentLiv;
+import br.com.contentmanager.entity.mongo.Arquivo;
 import br.com.contentmanager.exception.BusinessException;
 import br.com.contentmanager.specification.ContentSpecification;
 import br.com.contentmanager.util.ErrorMessageEnum;
@@ -49,6 +51,7 @@ public class ContentModelImpl implements ContentModel{
 	@Override
 	public List<ContentDTO> findContent(final Long id, final Long dateCreate, final Long dateModify, 
 			final String active, final Long contentTypeId, final Long systemId) throws BusinessException {
+		this.findMongo();
 		final SystemDTO system = new SystemDTO(systemId, null, null);
 		final ContentTypeDTO contentTypeDTO = new ContentTypeDTO(contentTypeId, null);
 		final ContentDTO contentDTO = new ContentDTO(id, active, null, dateCreate, dateModify, contentTypeDTO, system);
@@ -146,6 +149,12 @@ public class ContentModelImpl implements ContentModel{
 		if(content.getActive() == null){
 			throw new BusinessException(ErrorMessageEnum.ATTRIBUTE_REQUIRED_NOT_INFORMED_ID_CONTENT_TYPE);
 		}
+	}
+	@Autowired
+	private ArquivoRepository arquivorepo;
+	private void findMongo(){
+		final List<Arquivo> arquivos = arquivorepo.findAll();
+		System.out.println(arquivos);
 	}
 
 }

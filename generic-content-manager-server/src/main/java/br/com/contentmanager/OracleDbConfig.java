@@ -15,31 +15,31 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-@Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", basePackages = { "br.com.contentmanager.dao" })
+//
+//@Configuration
+//@EnableTransactionManagement
+//@EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", basePackages = { "br.com.contentmanager.dao" })
 public class OracleDbConfig {
 
-	@Primary
-	@Bean(name = "oracleDataSource")
-	@ConfigurationProperties(prefix = "spring.datasource")
-	public DataSource dataSource() {
-		return DataSourceBuilder.create().build();
-	}
-
-	@Primary
-	@Bean(name = "entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
-			@Qualifier("dataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource).packages("br.com.contentmanager.entity").persistenceUnit("foo").build();
-	}
-
-	@Primary
-	@Bean(name = "transactionManager")
-	public PlatformTransactionManager transactionManager(
-			@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
-		return new JpaTransactionManager(entityManagerFactory);
-	}
+//	@Primary
+//	@Bean(name = "oracleDataSource")
+//	@ConfigurationProperties(prefix = "spring.datasource")
+//	public DataSource dataSource() {
+//		return DataSourceBuilder.create().build();
+//	}
+//
+//	@Primary
+//	@Bean(name = "entityManagerFactory")
+//	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
+//			@Qualifier("dataSource") DataSource dataSource) {
+//		return builder.dataSource(dataSource).packages("br.com.contentmanager.entity").persistenceUnit("foo").build();
+//	}
+//
+//	@Primary
+//	@Bean(name = "transactionManager")
+//	public PlatformTransactionManager transactionManager(
+//			@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+//		return new JpaTransactionManager(entityManagerFactory);
+//	}
 
 }
